@@ -47,7 +47,7 @@ namespace EnhancedInvisibility
 			void Install()
 			{
 				REL::Relocation<std::uintptr_t> target{ RELOCATION_ID(19369, 19796), OFFSET(0x61A, 0x74A) };
-				stl::write_thunk_call<DispelAlteredStates>(target.address());
+			   ::stl::write_thunk_call<DispelAlteredStates>(target.address());
 			}
 		}
 
@@ -73,7 +73,7 @@ namespace EnhancedInvisibility
 			void Install()
 			{
 				REL::Relocation<std::uintptr_t> func{ RELOCATION_ID(37864, 38819) };
-				stl::asm_replace<DispelAlteredStates>(func.address());
+			   ::stl::asm_replace<DispelAlteredStates>(func.address());
 			}
 		}
 
@@ -149,7 +149,7 @@ namespace EnhancedInvisibility
 
 			if (settings->GetInvisDetection() != DetectionState::kDisabled || settings->GetEtherealDetection() != DetectionState::kDisabled) {
 				REL::Relocation<std::uintptr_t> target{ RELOCATION_ID(41659, 42742), OFFSET(0x526, 0x67B) };
-				stl::write_thunk_call<CalculateDetection>(target.address());
+			   ::stl::write_thunk_call<CalculateDetection>(target.address());
 
 				logger::info("Installing Make Undetectable hook");
 			}
@@ -180,7 +180,7 @@ namespace EnhancedInvisibility
 
 			if (settings->GetAllowRefractionFix()) {
 				REL::Relocation<std::uintptr_t> target{ RELOCATION_ID(99868, 106513), OFFSET(0x97, 0xAE) };
-				stl::write_thunk_call<SetShaderFlag>(target.address());
+			   ::stl::write_thunk_call<SetShaderFlag>(target.address());
 
 				logger::info("Installing Refraction Shader Fix");
 			}
@@ -220,7 +220,7 @@ namespace EnhancedInvisibility
 
 			void Install()
 			{
-				stl::write_vfunc<RE::BSTempEffectGeometryDecal, Initialize>();
+			   ::stl::write_vfunc<RE::BSTempEffectGeometryDecal, Initialize>();
 			}
 		}
 
@@ -231,7 +231,7 @@ namespace EnhancedInvisibility
 				static void thunk(RE::ExtraDataList* a_extraList, const RE::NiPointer<RE::NiAVObject>& a_projectile3D, RE::BGSProjectile* a_projectile)
 				{
 					if (a_projectile3D) {
-						const auto actor = stl::adjust_pointer<RE::Actor>(a_extraList, -0x70);
+					   const auto actor = ::stl::adjust_pointer<RE::Actor>(a_extraList, -0x70);
 						if (actor && detail::has_refraction(actor)) {
 							Refraction::set_refraction(a_projectile3D.get(), true, 0.5f, true);
 						}
@@ -245,7 +245,7 @@ namespace EnhancedInvisibility
 			void Install()
 			{
 				REL::Relocation<std::uintptr_t> target{ RELOCATION_ID(42856, 44031) };
-				stl::write_thunk_call<AddAttachedArrow3D>(target.address() + OFFSET_3(0x53A, 0x688, 0x737));
+			   ::stl::write_thunk_call<AddAttachedArrow3D>(target.address() + OFFSET_3(0x53A, 0x688, 0x737));
 			}
 		}
 
@@ -316,8 +316,8 @@ namespace EnhancedInvisibility
 
 			void Install()
 			{
-				stl::write_vfunc<RE::PlayerCharacter, Player::SetRefraction>();
-				stl::write_vfunc<RE::Character, Character::SetRefraction>();
+			   ::stl::write_vfunc<RE::PlayerCharacter, Player::SetRefraction>();
+			   ::stl::write_vfunc<RE::Character, Character::SetRefraction>();
 			}
 		}
 
@@ -346,7 +346,7 @@ namespace EnhancedInvisibility
 	{
 		logger::info("{:*^30}", "HOOKS");
 
-	    Refraction::Install();
+		Refraction::Install();
 		MakeInvisible::Install();
 
 #if !defined(SKYRIM_AE) && !defined(SKYRIMVR)  // SSE only

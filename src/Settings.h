@@ -36,9 +36,9 @@ private:
 		LoadSettings();
 	}
 
-    void LoadSettings();
+	void LoadSettings();
 
-    struct
+	struct
 	{
 		bool fixRefraction{ true };
 		bool refractBlood{ true };
@@ -61,8 +61,8 @@ private:
 		template <class T>
 		static void get_value(CSimpleIniA& a_ini, T& a_value, const char* a_section, const char* a_key, const char* a_comment)
 		{
-			a_value = string::lexical_cast<T>(a_ini.GetValue(a_section, a_key, std::to_string(stl::to_underlying(a_value)).c_str()));
-			a_ini.SetValue(a_section, a_key, std::to_string(stl::to_underlying(a_value)).c_str(), a_comment);
+			   a_value = string::lexical_cast<T>(a_ini.GetValue(a_section, a_key, std::to_string(::stl::to_underlying(a_value)).c_str()));
+			   a_ini.SetValue(a_section, a_key, std::to_string(::stl::to_underlying(a_value)).c_str(), a_comment);
 		}
 
 		static void get_value(CSimpleIniA& a_ini, bool& a_value, const char* a_section, const char* a_key, const char* a_comment)
